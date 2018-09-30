@@ -1,8 +1,16 @@
 $( document ).ready(function() {
-                
-                $("#about_scroll").fadeOut();   
+
+                $("#about_scroll").fadeOut();
                 $("#work_scroll").fadeOut();
                 $("#contact_scroll").fadeOut();
+                $("#blog_scroll").fadeOut();
+
+                $("#blog").click(function(){
+                    $("#index").fadeOut();
+                    $("#blog_scroll").fadeIn();
+                    $('#blog_left').addClass('animated slideInLeft');
+                    $('#blog_right').addClass('animated slideInRight');
+                    });
 
                 $("#about").click(function(){
                     $("#index").fadeOut();
@@ -22,12 +30,12 @@ $( document ).ready(function() {
                     $('#contact_left').addClass('animated slideInLeft');
                     $('#contact_right').addClass('animated slideInRight');
                     });
-                
+
                 $(".back").click(function(){
                     $(".pages").fadeOut();
                     $("#index").fadeIn();
                     $('#index_left').addClass('animated slideInLeft');
                     $('#index_right').addClass('animated slideInRight');
                     });
-           
+
 		});
