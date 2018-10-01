@@ -31,25 +31,25 @@
 def main():
   pages_list = [
               {
-              'filename': 'content/mid_index.html',
+              'filename': 'content/index.html',
               'output': 'docs/index.html',
               'title': 'Homie',
               'page': 'index_page',
               },
               {
-              'filename': 'content/mid_about.html',
+              'filename': 'content/about.html',
               'output': 'docs/about.html',
               'title': 'A little about me',
               'page': 'about_page',
               },
               {
-              'filename': 'content/mid_work.html',
+              'filename': 'content/work.html',
               'output': 'docs/work.html',
               'title': 'My works',
               'page': 'work_page',
               },
               {
-              'filename': 'content/mid_contact.html',
+              'filename': 'content/contact.html',
               'output': 'docs/contact.html',
               'title': 'Contact Me',
               'page': 'contact_page',
