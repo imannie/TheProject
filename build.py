@@ -1,5 +1,5 @@
 
-<<<<<<< HEAD
+
 #Python Script Site Generator
     top_template = open("templates/top.html").read()
     bottom_template = open("templates/bottom.html").read()
