@@ -46,5 +46,5 @@ open("docs/contact.html", "w+").write(combine_contact)
 
 
 
->>>>>>> master
+
 
