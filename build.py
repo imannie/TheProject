@@ -1,9 +1,4 @@
 
-
-#Python Script Site Generator
-top_template = open("templates/top.html").read()
-bottom_template = open("templates/bottom.html").read()
-
 #Combine HTML index file
 
 index_body = open("content/index.html").read()
@@ -25,9 +20,8 @@ contact_body = open("content/contact.html").read()
 combine_contact = top_template + contact_body + bottom_template
 open("docs/contact.html", "w+").write(combine_contact)
 
-  
-def main():
-  pages = [
+
+pages = [
               {
               'filename': 'content/index.html',
               'output': 'docs/index.html',
@@ -51,14 +45,17 @@ def main():
               'output': 'docs/contact.html',
               'title': 'Contact Me',
               'pagename': 'contact_page',
-              },
+              }
   ]
-  for datum in pages:
-  template = open("templates/base.html").read()
-  base = replace_placeholders(template, datum)
-  open(datum['output'], "w+").write(base)
+  
+def main():
+    top_template = open("templates/top.html").read()
+    bottom_template = open("templates/bottom.html").read()
+    base = top_template + "{{content}}" + bottom_template
+    open("templates/base.html", "w+").write(base)
 
-  def loop(pages):
+
+def loop(pages):
     template = open("templates/base.html").read()
     for datum in pages:
       filename = datum['filename']
@@ -67,8 +64,8 @@ def main():
       pagename = datum['pagename']
       index_content = open(datum['filename']).read()
       index_page = template.replace("{{content}}", index_content).replace("{{title}}", title)
-      open(datum['output'], "w+").write(index_page)
-  loop(pages)
+      open(output, "w+").write(index_page)
+loop(pages)
 
 
 if __name__ == "__main__":
