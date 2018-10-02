@@ -1,11 +1,11 @@
 
 
 #Python Script Site Generator
-    top_template = open("templates/top.html").read()
-    bottom_template = open("templates/bottom.html").read()
+top_template = open("templates/top.html").read()
+bottom_template = open("templates/bottom.html").read()
 
 #Combine HTML index file
-<<<<<<< HEAD
+
 index_body = open("content/index.html").read()
 combine_index = top_template + index_body + bottom_template
 open("docs/index.html", "w+").write(combine_index)
@@ -24,74 +24,51 @@ open("docs/work.html", "w+").write(combine_work)
 contact_body = open("content/contact.html").read()
 combine_contact = top_template + contact_body + bottom_template
 open("docs/contact.html", "w+").write(combine_contact)
-=======
-    index_body = open("content/index.html").read()
-    combine_index = top_template + index_body + bottom_template
-    open("docs/index.html", "w+").write(combine_index)
 
-#Combine HTML about file
-    about_body = open("content/about.html").read()
-    combine_about = top_template + about_body + bottom_template
-    open("docs/about.html", "w+").write(combine_about)
-
-#Combine HTML work file
-    work_body = open("content/work.html").read()
-    combine_work = top_template + work_body + bottom_template
-    open("docs/work.html", "w+").write(combine_work)
-
-#Combine HTML contact file
-    contact_body = open("content/contact.html").read()
-    combine_contact = top_template + contact_body + bottom_template
-    open("docs/contact.html", "w+").write(combine_contact)
-
-
-
-=======
   
 def main():
-  pages_list = [
+  pages = [
               {
               'filename': 'content/index.html',
               'output': 'docs/index.html',
-              'title': 'Homie',
-              'page': 'index_page',
+              'title': 'Annie Project',
+              'pagename': 'index_page',
               },
               {
               'filename': 'content/about.html',
               'output': 'docs/about.html',
               'title': 'A little about me',
-              'page': 'about_page',
+              'pagename': 'about_page',
               },
               {
               'filename': 'content/work.html',
               'output': 'docs/work.html',
               'title': 'My works',
-              'page': 'work_page',
+              'pagename': 'work_page',
               },
               {
               'filename': 'content/contact.html',
               'output': 'docs/contact.html',
               'title': 'Contact Me',
-              'page': 'contact_page',
+              'pagename': 'contact_page',
               },
   ]
+  for datum in pages:
+  template = open("templates/base.html").read()
+  base = replace_placeholders(template, datum)
+  open(datum['output'], "w+").write(base)
 
-  top_template = open("templates/top.html").read()
-  bottom_template = open("templates/bottom.html").read()
-  base = top_template + "{{content}}" + bottom_template
-  open("templates/base.html", "w+").write(base)
-
-  def loop(pages_list):
-    for datum in pages_list:
+  def loop(pages):
+    template = open("templates/base.html").read()
+    for datum in pages:
       filename = datum['filename']
       output = datum['output']
       title = datum['title']
-      page = datum['page']
-      template = open("templates/base.html").read()
+      pagename = datum['pagename']
       index_content = open(datum['filename']).read()
-      index_page = template.replace("{{content}}", index_content).replace("{{title}}", "Annie Project")
+      index_page = template.replace("{{content}}", index_content).replace("{{title}}", title)
       open(datum['output'], "w+").write(index_page)
-  loop(pages_list)
+  loop(pages)
 
 
 if __name__ == "__main__":
