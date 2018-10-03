@@ -1,101 +1,49 @@
 
-
-#Python Script Site Generator
-    top_template = open("templates/top.html").read()
-    bottom_template = open("templates/bottom.html").read()
-
-#Combine HTML index file
-<<<<<<< HEAD
-index_body = open("content/index.html").read()
-combine_index = top_template + index_body + bottom_template
-open("docs/index.html", "w+").write(combine_index)
-
-#Combine HTML about file
-about_body = open("content/about.html").read()
-combine_about = top_template + about_body + bottom_template
-open("docs/about.html", "w+").write(combine_about)
-
-#Combine HTML work file
-work_body = open("content/work.html").read()
-combine_work = top_template + work_body + bottom_template
-open("docs/work.html", "w+").write(combine_work)
-
-#Combine HTML contact file
-contact_body = open("content/contact.html").read()
-combine_contact = top_template + contact_body + bottom_template
-open("docs/contact.html", "w+").write(combine_contact)
-=======
-    index_body = open("content/index.html").read()
-    combine_index = top_template + index_body + bottom_template
-    open("docs/index.html", "w+").write(combine_index)
-
-#Combine HTML about file
-    about_body = open("content/about.html").read()
-    combine_about = top_template + about_body + bottom_template
-    open("docs/about.html", "w+").write(combine_about)
-
-#Combine HTML work file
-    work_body = open("content/work.html").read()
-    combine_work = top_template + work_body + bottom_template
-    open("docs/work.html", "w+").write(combine_work)
-
-#Combine HTML contact file
-    contact_body = open("content/contact.html").read()
-    combine_contact = top_template + contact_body + bottom_template
-    open("docs/contact.html", "w+").write(combine_contact)
+import glob
+import os
+from jinja2 import Template
 
 
+pages = []
 
-=======
-  
 def main():
-  pages_list = [
-              {
-              'filename': 'content/index.html',
-              'output': 'docs/index.html',
-              'title': 'Homie',
-              'page': 'index_page',
-              },
-              {
-              'filename': 'content/about.html',
-              'output': 'docs/about.html',
-              'title': 'A little about me',
-              'page': 'about_page',
-              },
-              {
-              'filename': 'content/work.html',
-              'output': 'docs/work.html',
-              'title': 'My works',
-              'page': 'work_page',
-              },
-              {
-              'filename': 'content/contact.html',
-              'output': 'docs/contact.html',
-              'title': 'Contact Me',
-              'page': 'contact_page',
-              },
-  ]
-
-  top_template = open("templates/top.html").read()
-  bottom_template = open("templates/bottom.html").read()
-  base = top_template + "{{content}}" + bottom_template
-  open("templates/base.html", "w+").write(base)
-
-  def loop(pages_list):
-    for datum in pages_list:
-      filename = datum['filename']
-      output = datum['output']
-      title = datum['title']
-      page = datum['page']
-      template = open("templates/base.html").read()
-      index_content = open(datum['filename']).read()
-      index_page = template.replace("{{content}}", index_content).replace("{{title}}", "Annie Project")
-      open(datum['output'], "w+").write(index_page)
-  loop(pages_list)
+    pages()
+    for datum in pages:
+        index_page = replace_template(datum)
+        open(datum['output'], "w+").write(index_page)
 
 
-if __name__ == "__main__":
-  main()
+
+def dict():
+    all_html_files = glob.glob("content/*.html")
+    for file_path in all_html_files:
+        file_name = os.path.basename(file_path)
+        name_only, extension = os.path.splitext(file_name)
+        pages.append({
+                     'filename': str(file_path),
+                     'output': 'docs/' + str(file_name),
+                     'title': 'Annie Project',
+                     'pagename': 'index_page',
+        })
+
+def replace_template(datum):
+    page_html = open(datum['filename']).read()
+    template_html = open("templates/base.html").read()
+    index_page = Template(template_html)
+    index_page = index_page.render(
+        title = datum['title'],
+        content = page_html,
+        )
+    return index_page
+    
+    
+
+
+
+
+
+
+
 
 
 
