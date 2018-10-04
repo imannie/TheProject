@@ -9,8 +9,21 @@ pages = []
 
 def main():
     for page in pages:
-        index_page = replace_template(page)
-        open(page['output'], "w+").write(index_page)
+        filename = page['filename']
+        title = page['title']
+        output = page['output']
+        footer = '<p>Learn To Code. Code Away</p>'
+        page_html = open(filename).read()
+        if filename.endwith('md'):
+            page_html = md_converted(page_html)
+        template_html = open('templates/base.html').read()
+        index_page = Template(template_html)
+        rendered = index_page.render(
+                                       title = title,
+                                       footer = footer,
+                                       content = page_html,
+                                       )
+        open(output, 'w+').write(rendered)
 
 
 
@@ -26,21 +39,9 @@ def dict():
         list_dict['output'] = 'docs/' + file_name
         pages.append(list_dict)
 
-
-def replace_template(datum):
-    page_html = open(page['filename']).read()
-    template_html = open("templates/base.html").read()
-    footer = 'Learn to code. Code away!'
-    index_page = Template(template_html)
-    index_page = index_page.render(
-        title = page['title'],
-        footer = footer,
-        content = page_html,
-        )
-    return index_page
     
     
-def markdown_converted(page):
+def md_converted(page):
     md = markdown.Markdown(extensions=["markdown.extensions.meta"])
     data = open(page['filename']).read()
     html = md.convert(data)
