@@ -8,45 +8,43 @@ import markdown
 pages = []
 
 def main():
-    for datum in pages:
-        index_page = replace_template(datum)
-        open(datum['output'], "w+").write(index_page)
+    for page in pages:
+        index_page = replace_template(page)
+        open(page['output'], "w+").write(index_page)
 
 
 
 def dict():
     all_html_files = glob.glob("content/*.html")
-    for file_path in all_html_files:
+    for file in all_html_files:
+        file_path = file
         file_name = os.path.basename(file_path)
         name_only, extension = os.path.splitext(file_name)
-        pages.append({
-                     'filename': str(file_path),
-                     'output': 'docs/' + str(file_name),
-                     'title': 'Annie Project',
-                     'footer': 'Learn to code. Code away!',
-                     'pagename': 'index_page',
-        })
+        list_dict = {}
+        list_dict['filename'] = filename
+        list_dict['title'] = name_only
+        list_dict['output'] = 'docs/' + file_name
+        pages.append(list_dict)
+
 
 def replace_template(datum):
-    page_html = open(datum['filename']).read()
+    page_html = open(page['filename']).read()
     template_html = open("templates/base.html").read()
     footer = 'Learn to code. Code away!'
     index_page = Template(template_html)
     index_page = index_page.render(
-        title = datum['title'],
+        title = page['title'],
         footer = footer,
         content = page_html,
         )
     return index_page
     
     
-def markdown_extexsion(datum):
+def markdown_converted(page):
     md = markdown.Markdown(extensions=["markdown.extensions.meta"])
-    data = open(datum['filename']).read()
+    data = open(page['filename']).read()
     html = md.convert(data)
     return html
-
-
 
 
 main()
